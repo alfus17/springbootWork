@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:if test="${not empty pageContext.request.userPrincipal.name}">
-		${pageContext.request.userPrincipal.name}
-	</c:if>
-	welecome member
+	<h1>Member JPA #01 - INSERT</h1>
+	아이디 : ${member.id}<br>
+	이름 : ${member.username}<br>
+	날짜 : ${member.createDate}
 </body>
 </html>

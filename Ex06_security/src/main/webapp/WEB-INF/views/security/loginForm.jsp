@@ -8,9 +8,15 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<c:if test="${not empty pageContext.request.userPrincipal.name}">
-		${pageContext.request.userPrincipal.name}
+	<c:if test="${param.error != null}">
+		Login Error!!<br>
+		${error_msg}
 	</c:if>
-	welecome member
+
+	<form action="login_check" method="post">
+		ID : <input name="username"><br>
+		PW : <input name="pwd"><br>
+		<input type="submit" value="LOGIN">
+	</form>
 </body>
 </html>
