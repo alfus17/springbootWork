@@ -16,9 +16,11 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
+@ToString
 @Entity(name="board2")
 @EntityListeners(AuditingEntityListener.class)
 public class Board {

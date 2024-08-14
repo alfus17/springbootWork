@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.study.springboot.domain.Member;
 import com.study.springboot.service.MemberService;
@@ -35,6 +36,11 @@ public class MemberController {
 	public String enrollForm() {
 		return "member/enrollForm";
 	}
+
+	@GetMapping("/myPage")
+	public String myPage() {
+		return "member/myPage";
+	}
 	
 	@GetMapping("/idCheck")
 	@ResponseBody
@@ -55,13 +61,24 @@ public class MemberController {
 		Optional<Member> loginUser = memberService.login(member);
 		if(loginUser.isPresent()) {
 			Member m = loginUser.get();
-			System.out.println("MemberController_loginUser : "+ m);
 			if(passwordEncoder.matches(member.getPassword(), m.getPassword())) {
-				model.addAttribute("loginUser", m);
+				model.addAttribute("loginUser", m);		
+				// 원래 requestScope => sessionScope로 바꾸기							
+				// 클래스에 @SessionAttributes({"loginUser"})어노테이션 달기
 			}
 		}
-		
 		return "redirect:/";
 	}
-
+	
+	/*
+	 * @SessionAttributes + model을 통해 로그인정보를 관리하는 경우
+	     SessionStatus객체를 통해 사용완료 처리해야 한다.
+	     - session객체를 폐기하지 않고 재사용 
+	 */
+	@GetMapping("/logout")
+	public String logout(SessionStatus status) {
+		if(!status.isComplete())
+			status.setComplete();
+		return "redirect:/";
+	}
 }
