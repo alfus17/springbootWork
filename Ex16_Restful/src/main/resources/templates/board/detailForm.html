@@ -6,6 +6,7 @@
 <script src="/webjars/jquery/3.7.1/jquery.min.js"></script>
 <link href="css/index.css" rel="stylesheet"/>
 <link href="css/boardList.css" rel="stylesheet"/>
+<link href="css/boardDetail.css" rel="stylesheet"/>
 </head>
 <body>
 	<div th:replace="~{/fragments/header.html :: fragment-menu}"></div>
@@ -16,7 +17,7 @@
 		
 		<br>
 		
-		<form action="update" method="post">
+		<form action="update" method="post" id="detail">
 			<table align="center">
 				<tr>
 					<td>제목</td>
@@ -24,7 +25,7 @@
 				</tr>
 				<tr>
 					<td>작성자</td>
-					<td th:text="${board.writer}"></td>
+					<td th:text="${board.writer}" readonly></td>
 				</tr>
 				<tr>
 					<td>작성일</td>
@@ -50,7 +51,7 @@
 		
 		<br>
 		
-		<table align="center">
+		<table align="center" id="reply">
 			<thead>
 				<tr>
 					<th width="100">댓글작성</th>
@@ -61,19 +62,19 @@
 					<th colspan="2" th:unless="${loginUser != null}">로그인 후 댓글을 작성할 수 있습니다</th>
 				</tr>
 				<tr>
-					<th colspan="3" style="text-align:center" th:text="|댓글(${reply.size()})|"></th>
+					<td colspan="3" style="text-align:center" th:text="|댓글(${reply.size()})|"></td>
 				</tr>
 				<tr>
-					<th>작성자</th>
-					<th>내용</th>
-					<th>작성일</th>
+					<td width="18%" align="center"><b>작성자</b></td>
+					<td width="60%" align="center"><b>내용</b></td>
+					<td width="22%" align="center"><b>작성일</b></td>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="r : ${reply}">
-					<td th:text="${r.writer}"></td>
+					<td th:text="${r.writer}" align="center"></td>
 					<td th:text="${r.content}"></td>
-					<td th:text="*{#temporals.format(r.createDate, 'yyyy-MM-dd')}"></td>
+					<td th:text="*{#temporals.format(r.createDate, 'yyyy-MM-dd')}"  align="center"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -93,7 +94,7 @@
 					url : "rinsert",
 					data : {
 						refBno : "[[${board.bno}]]",
-						writer : "[[${loginUser.id}]]",
+						writer : "[[${loginUser != null ? loginUser.id : ''}]]",
 						content : $("#replyContent").val()
 					},
 					type: "post",

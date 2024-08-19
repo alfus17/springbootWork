@@ -1,5 +1,6 @@
 package com.study.springboot.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -9,35 +10,27 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
-@Entity(name="board2")
+@Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Board {
+public class Member {
 	@Id
-	@SequenceGenerator (
-			name = "boardseq",
-			sequenceName = "board2_seq",
-			allocationSize = 1
-			)
-	@GeneratedValue(generator="boardseq")
-	private Long bno;
+	private String id;
 	@NonNull
-	private String title;
+	private String password;
 	@NonNull
-	private String content;
-	@NonNull
-	private String writer;
-	@Column(insertable=false, columnDefinition="NUMBER DEFAULT 0")
-	private Long count;
+	private String name;
+	private String email;
+	private LocalDate birthday;
+	private String gender;
+	private String phone;
+	private String address;
 	
 	@CreatedDate
 	@Column(name="create_date")

@@ -12,32 +12,31 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 @Data
 @NoArgsConstructor
-@Entity(name="board2")
+@Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Board {
+public class Reply {
 	@Id
 	@SequenceGenerator (
-			name = "boardseq",
-			sequenceName = "board2_seq",
+			name = "replyseq",
+			sequenceName = "reply_seq",
 			allocationSize = 1
 			)
-	@GeneratedValue(generator="boardseq")
-	private Long bno;
-	@NonNull
-	private String title;
+	@GeneratedValue(generator="replyseq")
+	private Long rno;
 	@NonNull
 	private String content;
 	@NonNull
 	private String writer;
-	@Column(insertable=false, columnDefinition="NUMBER DEFAULT 0")
-	private Long count;
+	
+	@NonNull
+	@Column(name="ref_bno")
+	private Long refBno;
 	
 	@CreatedDate
 	@Column(name="create_date")
